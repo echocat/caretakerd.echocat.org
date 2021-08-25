@@ -1,5 +1,4 @@
 /.idea
 *.iml
-/vendor
 /var
-/blobs
+/dist

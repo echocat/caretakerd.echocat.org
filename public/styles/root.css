@@ -1,0 +1,43 @@
+body{
+    box-sizing:border-box;
+    min-width:200px;
+    max-width:980px;
+    margin:0 auto;
+    padding:45px;
+}
+.dataType-kind {
+    font-size: 0.9em;
+    font-weight: normal;
+}
+.markdown-body .anchor {
+    float: right;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+.configuration-structure-element {
+    font-weight: bold;
+}
+.configuration-structure-hint,
+.configuration-structure-hint a {
+    color: #aaaaaa;
+}
+.dataType-default {
+    font-weight: normal;
+    color: #aaaaaa;
+}
+.dataType-default-assign {
+    padding: 0 0.2em;
+    font-weight: normal;
+    color: #aaaaaa;
+}
+.tabIndent:before {
+    content: '    ';
+}
+.indent:before {
+    content: ' ';
+}
+.hint {
+    font-style: italic;
+    opacity: 0.3;
+}

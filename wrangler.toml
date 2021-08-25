@@ -1,0 +1,15 @@
+name = "caretakerd_echocat_org"
+type = "webpack"
+
+account_id = ""
+workers_dev = true
+route = ""
+zone_id = ""
+
+kv_namespaces = [
+    { binding = "CACHE", id = "d92514c90e874ef0a099e23dd8cf802f", preview_id = "d114db6dc3a94548900a8f031400f789" }
+]
+
+[site]
+bucket = "./public"
+entry-point = "cloudflare-worker"
