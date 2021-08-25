@@ -8,6 +8,9 @@ export class Router {
             regexp: /^\/(latest|v[^/]+)\/download\/([^/]+)$/,
             handler: async (request, match) => await this.onDownload(request, match[1], match[2]),
         }, {
+            regexp: /^\/latest\.(json|txt)$/,
+            handler: async (request, match) => await this.onLatestInfo(request, match[1]),
+        }, {
             regexp: /^\/(latest|v[^/]+)(|\.html?|\/(?:|index\.html?|caretakerd\.html?))$/,
             handler: async (request, match) => await this._onDocument(request, match[1], match[2]),
         }, {
@@ -21,6 +24,11 @@ export class Router {
 
     async onDownload(request, release, file) {
         console.log(`fallback.onDownload(url="${request.url}", release="${release}", file="${file}")`);
+        return await this.onNotFound(request);
+    }
+
+    async onLatestInfo(request, type) {
+        console.log(`fallback.onLatestInfo(url="${request.url}", type="${type}")`);
         return await this.onNotFound(request);
     }
 
