@@ -2,10 +2,6 @@ import {getAssetFromKV, NotFoundError} from '@cloudflare/kv-asset-handler';
 import {ExecutionContext} from '@cloudflare/workers-types';
 import {Environment} from './common';
 
-// @ts-ignore
-import manifestJSON from '__STATIC_CONTENT_MANIFEST';
-const assetManifest = JSON.parse(manifestJSON);
-
 interface Rule {
     regexp: RegExp;
     handler: (request: Request, env: Environment, match: RegExpMatchArray) => Promise<Response>;
@@ -35,7 +31,7 @@ export class Router {
         },
     ];
 
-    constructor() {}
+    constructor(private assetManifest: any) {}
 
     public onNotFound: (request: Request, env: Environment) => Promise<Response> = async (request, env) => {
         return await this._defaultOnNotFound(request, env);
@@ -116,7 +112,7 @@ export class Router {
                 },
                 {
                     ASSET_NAMESPACE: env.__STATIC_CONTENT,
-                    ASSET_MANIFEST: assetManifest,
+                    ASSET_MANIFEST: this.assetManifest,
                 },
             );
             response.headers.set('Cache-Control', `public, max-age=3600, immutable`);

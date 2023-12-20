@@ -1,4 +1,7 @@
 import {ExecutionContext} from '@cloudflare/workers-types';
+
+// @ts-ignore
+import manifestJSON from '__STATIC_CONTENT_MANIFEST';
 import {Environment} from './common';
 import {AllHandler} from './handler_all';
 import {DocumentHandler} from './handler_document';
@@ -7,7 +10,9 @@ import {LatestInfoHandler} from './handler_latest_info';
 import {Releases} from './releases';
 import {Router} from './router';
 
-const router = new Router();
+const assetManifest = JSON.parse(manifestJSON);
+
+const router = new Router(assetManifest);
 const releases = new Releases('echocat', 'caretakerd', router);
 const documentHandler = new DocumentHandler(releases);
 const downloadHandler = new DownloadHandler(releases);
