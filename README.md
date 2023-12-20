@@ -2,9 +2,9 @@
 
 Source files for the frontend of [caretakerd.echocat.org](https://caretakerd.echocat.org) website.
 
-* [Deployment](#Deployment)
-* [Contributing](#contributing)
-* [License](#license)
+-   [Deployment](#Deployment)
+-   [Contributing](#contributing)
+-   [License](#license)
 
 ## Deployment
 
@@ -16,19 +16,10 @@ Source files for the frontend of [caretakerd.echocat.org](https://caretakerd.ech
 ### Local development
 
 ```bash
-$ wrangler dev 
+$ npm run start
 ```
 
 [More details.](https://developers.cloudflare.com/workers/cli-wrangler/commands#dev)
-
-### Publish changes
-
-1. Ensure everything works in [local development](#local-development).
-2. Commit/Push the latest changes to git.
-3. [Publish the changes](https://developers.cloudflare.com/workers/cli-wrangler/commands#publish)
-   ```bash
-   $ wrangler publish
-   ```
 
 ## Contributing
 

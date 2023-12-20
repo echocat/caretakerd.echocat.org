@@ -1,4 +1,7 @@
-/.idea
-*.iml
 /var
+/target
+/.idea
 /dist
+/node_modules
+/.dev.vars
+/.wrangler

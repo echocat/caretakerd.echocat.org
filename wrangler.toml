@@ -1,15 +1,13 @@
-name = "caretakerd_echocat_org"
-type = "webpack"
-
-account_id = ""
-workers_dev = true
-route = ""
-zone_id = ""
+name = "caretakerd"
+main = "src/index.ts"
+compatibility_date = "2023-12-19"
+account_id = "76cbc9ff3d45b6d0e9963e41ddeb9b71"
 
 kv_namespaces = [
-    { binding = "CACHE", id = "d92514c90e874ef0a099e23dd8cf802f", preview_id = "d114db6dc3a94548900a8f031400f789" }
+    { binding = "CACHE", id = "0ea59696afaf4d3893499f0f5e06f880", preview_id = "2df54f10101e42bc95adf9cafe119763" }
 ]
+
+node_compat = true
 
 [site]
 bucket = "./public"
-entry-point = "cloudflare-worker"

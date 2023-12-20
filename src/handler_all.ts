@@ -1,3 +1,6 @@
+import {Environment} from './common';
+import {Releases} from './releases';
+
 const template = `<!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,15 +21,12 @@ const template = `<!DOCTYPE html>
 </html>`;
 
 export class AllHandler {
+    constructor(private releases: Releases) {}
 
-    constructor(releases) {
-        this.releases = releases;
-    }
-
-    async handle(request) {
+    async handle(request: Request, env: Environment) {
         let releasesHtml = '';
-        const latest = await this.releases.latest();
-        for (const release of await this.releases.all()) {
+        const latest = await this.releases.latest(request, env);
+        for (const release of await this.releases.all(request, env)) {
             releasesHtml += `<li><a href="/${encodeURIComponent(release.name)}/">${escape(release.name)}</a>`;
             if (release.name === latest) {
                 releasesHtml += ` <span class="hint">Latest</span>`;
@@ -34,13 +34,11 @@ export class AllHandler {
             releasesHtml += `</li>`;
         }
 
-        const html = template
-            .replaceAll('%%releases%%', releasesHtml);
+        const html = template.replaceAll('%%releases%%', releasesHtml);
         return new Response(html, {
             headers: {
-                "content-type": "text/html;charset=UTF-8",
+                'content-type': 'text/html;charset=UTF-8',
             },
         });
     }
-
 }

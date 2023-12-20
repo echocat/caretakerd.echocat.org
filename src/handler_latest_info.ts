@@ -1,11 +1,11 @@
+import {Environment} from './common';
+import {Releases} from './releases';
+
 export class LatestInfoHandler {
+    constructor(private releases: Releases) {}
 
-    constructor(releases) {
-        this.releases = releases;
-    }
-
-    async handle(request, type) {
-        const release = await this.releases.latest();
+    public async handle(request: Request, env: Environment, type: string): Promise<Response> {
+        const release = await this.releases.latest(request, env);
         switch (type) {
             case 'json':
                 return new Response(JSON.stringify({name: release}), {
@@ -13,7 +13,7 @@ export class LatestInfoHandler {
                     headers: {
                         'Cache-Control': `public, max-age=60, immutable`,
                         'Content-Type': 'application/json',
-                    }
+                    },
                 });
             default:
                 return new Response(release, {
@@ -21,9 +21,8 @@ export class LatestInfoHandler {
                     headers: {
                         'Cache-Control': `public, max-age=60, immutable`,
                         'Content-Type': 'text/plain',
-                    }
+                    },
                 });
         }
     }
-
 }

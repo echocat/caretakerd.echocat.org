@@ -1,11 +1,6 @@
-import {Octokit} from "@octokit/core";
-import {paginateRest} from "@octokit/plugin-paginate-rest";
-
-const MyOctokit = Octokit.plugin(paginateRest);
-// noinspection JSUnresolvedVariable
-const octokit = new MyOctokit({
-    auth: GITHUB_ACCESS_TOKEN,
-});
+import {Octokit} from '@octokit/rest';
+import {Environment} from './common';
+import {Router} from './router';
 
 const oneMinuteInSeconds = 60;
 const oneHourInSeconds = oneMinuteInSeconds * 60;
@@ -16,22 +11,18 @@ const maxRetrieveTries = 25;
 const cacheKvSettings = {
     expirationTtl: oneHourInSeconds,
 };
-// noinspection JSUnresolvedVariable
-const cacheKv = CACHE;
 const documentationFilename = 'caretakerd.html';
 
-
 export class Releases {
+    constructor(
+        private organization: string,
+        private repository: string,
+        private router: Router,
+    ) {}
 
-    constructor(organization, repository, router) {
-        this.organization = organization;
-        this.repository = repository;
-        this.router = router;
-    }
-
-    async respondWithDocumentationOf(request, release) {
-        let content = await cacheKv.get(`documentation-${release}`, {
-            cacheTtl: oneHourInSeconds
+    public async respondWithDocumentationOf(request: Request, env: Environment, release: string): Promise<Response> {
+        let content = await env.CACHE.get(`documentation-${release}`, {
+            cacheTtl: oneHourInSeconds,
         });
         if (!content) {
             const url = `https://github.com/${this.organization}/${this.repository}/releases/download/${release}/${documentationFilename}`;
@@ -40,13 +31,13 @@ export class Releases {
                 redirect: 'follow',
             });
             if (response.status === 404) {
-                return this.router.onNotFound(request);
+                return await this.router.onNotFound(request, env);
             }
             if (response.status !== 200) {
                 throw `Unexpected return code received while retrieving '${url}': ${response.status} - ${response.statusText}`;
             }
-            content = await this._responseBodyToString(response.body);
-            await cacheKv.put(`documentation-${release}`, content);
+            content = await this._responseBodyToString(response.body!);
+            await env.CACHE.put(`documentation-${release}`, content);
         }
         const ttl = release === 'latest' ? oneMinuteInSeconds : oneYearInSeconds;
         return new Response(content, {
@@ -54,11 +45,11 @@ export class Releases {
             headers: {
                 'Cache-Control': `public, max-age=${ttl}, immutable`,
                 'Content-Type': 'text/html;charset=utf8',
-            }
+            },
         });
     }
 
-    async _responseBodyToString(body) {
+    async _responseBodyToString(body: ReadableStream<any>) {
         let reader = body.getReader();
         let utf8Decoder = new TextDecoder();
         let nextChunk;
@@ -73,48 +64,51 @@ export class Releases {
         return resultStr;
     }
 
-    async respondWithFileDownloadFor(request, release, file) {
+    public async respondWithFileDownloadFor(_request: Request, _env: Environment, release: string, file: string): Promise<Response> {
         const url = `https://github.com/${this.organization}/${this.repository}/releases/download/${release}/${file}`;
         return Response.redirect(url, 301);
     }
 
-    async latest() {
+    async latest(request: Request, env: Environment): Promise<string> {
         for (let i = 0; i < maxRetrieveTries; i++) {
-            const result = await cacheKv.get('latestRelease', {
-                cacheTtl: oneHourInSeconds
+            const result = await env.CACHE.get('latestRelease', {
+                cacheTtl: oneHourInSeconds,
             });
             if (result) {
                 return result;
             }
-            await this._retrieveReleases();
+            await this._retrieveReleases(request, env);
         }
         throw `Was not able to retrieve the latest release after ${maxRetrieveTries} tries.`;
     }
 
-    async all() {
+    async all(request: Request, env: Environment) {
         for (let i = 0; i < maxRetrieveTries; i++) {
-            const plain = await cacheKv.get('allReleases', {
-                cacheTtl: oneHourInSeconds
+            const plain = await env.CACHE.get('allReleases', {
+                cacheTtl: oneHourInSeconds,
             });
             if (plain) {
                 return JSON.parse(plain);
             }
-            await this._retrieveReleases();
+            await this._retrieveReleases(request, env);
         }
         throw `Was not able to retrieve the all releases after ${maxRetrieveTries} tries.`;
     }
 
-    async _retrieveReleases() {
+    async _retrieveReleases(_request: Request, env: Environment) {
+        const octokit = new Octokit({
+            auth: env.GITHUB_ACCESS_TOKEN,
+        });
         let latest = null;
         const releases = [];
-        for await(const response of octokit.paginate.iterator('GET /repos/{owner}/{repo}/releases', {
+        for await (const response of octokit.paginate.iterator('GET /repos/{owner}/{repo}/releases', {
             owner: this.organization,
             repo: this.repository,
             per_page: 5,
         })) {
             for (const release of response.data) {
-                if (release.draft === false) {
-                    if (release.prerelease === false && latest === null) {
+                if (!release.draft) {
+                    if (!release.prerelease && latest === null) {
                         latest = release.name;
                     }
                     releases.push({
@@ -129,9 +123,7 @@ export class Releases {
             throw 'There is no latest version are available.';
         }
 
-        await cacheKv.put('latestRelease', latest, cacheKvSettings);
-        await cacheKv.put('allReleases', JSON.stringify(releases), cacheKvSettings);
+        await env.CACHE.put('latestRelease', latest, cacheKvSettings);
+        await env.CACHE.put('allReleases', JSON.stringify(releases), cacheKvSettings);
     }
-
 }
-

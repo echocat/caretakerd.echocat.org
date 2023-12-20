@@ -1,0 +1,13 @@
+name = "caretakerd_echocat_org"
+main = "src/index.ts"
+compatibility_date = "2023-12-19"
+account_id = "eae269e15c934608f8593a46c8628bcc"
+
+kv_namespaces = [
+    { binding = "CACHE", id = "d92514c90e874ef0a099e23dd8cf802f", preview_id = "d114db6dc3a94548900a8f031400f789" }
+]
+
+node_compat = true
+
+[site]
+bucket = "./public"
