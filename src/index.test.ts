@@ -27,7 +27,7 @@ const testEnvironment: Environment = {
 };
 
 const testContext: ExecutionContext = {
-    waitUntil(_promise) {
+    waitUntil() {
         throw `Not implemented!`;
     },
     passThroughOnException() {

@@ -50,14 +50,14 @@ export class Releases {
     }
 
     async _responseBodyToString(body: ReadableStream<any>) {
-        let reader = body.getReader();
-        let utf8Decoder = new TextDecoder();
+        const reader = body.getReader();
+        const utf8Decoder = new TextDecoder();
         let nextChunk;
 
         let resultStr = '';
 
         while (!(nextChunk = await reader.read()).done) {
-            let partialData = nextChunk.value;
+            const partialData = nextChunk.value;
             resultStr += utf8Decoder.decode(partialData);
         }
 
