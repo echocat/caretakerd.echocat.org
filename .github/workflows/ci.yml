@@ -37,12 +37,6 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Deploy Legacy
-              uses: cloudflare/wrangler-action@v3
-              with:
-                  command: deploy -c wrangler_legacy.toml
-                  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-
             - name: Deploy
               uses: cloudflare/wrangler-action@v3
               with:
