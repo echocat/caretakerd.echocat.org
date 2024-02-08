@@ -23,7 +23,7 @@
         "yaml": "^2.3.4"
     },
     "devDependencies": {
-        "@cloudflare/workers-types": "^4.20240129.0",
+        "@cloudflare/workers-types": "^4.20240208.0",
         "npm-check-updates": "^16.14.14",
         "wrangler": "^3.27.0",
         "@types/jest": "^29.5.2",
