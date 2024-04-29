@@ -15,7 +15,7 @@
         "update": "ncu update && npm update"
     },
     "dependencies": {
-        "@cloudflare/kv-asset-handler": "0.3.1",
+        "@cloudflare/kv-asset-handler": "0.3.2",
         "@octokit/core": "6.1.2",
         "@octokit/plugin-paginate-rest": "11.2.0",
         "@octokit/rest": "20.1.0",
