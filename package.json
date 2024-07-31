@@ -24,7 +24,7 @@
     },
     "devDependencies": {
         "@cloudflare/workers-types": "4.20240725.0",
-        "npm-check-updates": "16.14.20",
+        "npm-check-updates": "17.0.0",
         "wrangler": "3.67.1",
         "@types/jest": "29.5.12",
         "@typescript-eslint/eslint-plugin": "7.17.0",
