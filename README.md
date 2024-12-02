@@ -2,9 +2,9 @@
 
 Source files for the frontend of [caretakerd.echocat.org](https://caretakerd.echocat.org) website.
 
--   [Deployment](#Deployment)
--   [Contributing](#contributing)
--   [License](#license)
+- [Deployment](#Deployment)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Deployment
 
