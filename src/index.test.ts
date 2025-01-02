@@ -33,6 +33,7 @@ const testContext: ExecutionContext = {
     passThroughOnException() {
         throw `Not implemented!`;
     },
+    props: {},
 };
 
 test('GET /', async () => {
