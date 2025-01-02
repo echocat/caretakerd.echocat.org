@@ -20,7 +20,7 @@
         "@octokit/plugin-paginate-rest": "11.3.6",
         "@octokit/rest": "21.0.2",
         "octokit": "4.0.3",
-        "yaml": "2.6.1"
+        "yaml": "2.7.0"
     },
     "devDependencies": {
         "@cloudflare/workers-types": "4.20241205.0",
