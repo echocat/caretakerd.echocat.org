@@ -17,7 +17,7 @@
     "dependencies": {
         "@cloudflare/kv-asset-handler": "0.3.4",
         "@octokit/core": "6.1.4",
-        "@octokit/plugin-paginate-rest": "11.4.0",
+        "@octokit/plugin-paginate-rest": "11.4.2",
         "@octokit/rest": "21.1.0",
         "octokit": "4.1.1",
         "yaml": "2.7.0"
