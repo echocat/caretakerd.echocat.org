@@ -39,6 +39,6 @@
         "typescript": "5.8.2",
         "typescript-eslint": "^8.28.0",
         "undici": "7.5.0",
-        "wrangler": "4.5.0"
+        "wrangler": "4.6.0"
     }
 }
