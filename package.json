@@ -30,7 +30,7 @@
         "@typescript-eslint/parser": "8.34.0",
         "better-sqlite3": "11.10.0",
         "eslint": "9.29.0",
-        "jest": "30.0.0",
+        "jest": "30.0.4",
         "jest-environment-miniflare": "2.14.4",
         "miniflare": "4.20250617.4",
         "npm-check-updates": "18.0.1",
