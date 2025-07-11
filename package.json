@@ -28,7 +28,7 @@
         "@types/jest": "30.0.0",
         "@typescript-eslint/eslint-plugin": "8.34.0",
         "@typescript-eslint/parser": "8.34.0",
-        "better-sqlite3": "11.10.0",
+        "better-sqlite3": "12.2.0",
         "eslint": "9.29.0",
         "jest": "30.0.4",
         "jest-environment-miniflare": "2.14.4",
