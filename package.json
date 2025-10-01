@@ -23,7 +23,7 @@
         "yaml": "2.8.1"
     },
     "devDependencies": {
-        "@cloudflare/workers-types": "4.20250926.0",
+        "@cloudflare/workers-types": "4.20250927.0",
         "@eslint/js": "9.36.0",
         "@types/jest": "30.0.0",
         "@typescript-eslint/eslint-plugin": "8.44.1",
