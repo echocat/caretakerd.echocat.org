@@ -19,7 +19,7 @@
         "@octokit/core": "7.0.5",
         "@octokit/plugin-paginate-rest": "13.2.0",
         "@octokit/rest": "22.0.0",
-        "octokit": "5.0.3",
+        "octokit": "5.0.4",
         "yaml": "2.8.1"
     },
     "devDependencies": {
