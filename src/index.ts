@@ -1,14 +1,13 @@
-import {ExecutionContext} from '@cloudflare/workers-types';
-
-// @ts-ignore
+// @ts-expect-error
 import manifestJSON from '__STATIC_CONTENT_MANIFEST';
-import {Environment} from './common';
-import {AllHandler} from './handler_all';
-import {DocumentHandler} from './handler_document';
-import {DownloadHandler} from './handler_download';
-import {LatestInfoHandler} from './handler_latest_info';
-import {Releases} from './releases';
-import {Router} from './router';
+import type { ExecutionContext } from '@cloudflare/workers-types';
+import type { Environment } from './common';
+import { AllHandler } from './handler_all';
+import { DocumentHandler } from './handler_document';
+import { DownloadHandler } from './handler_download';
+import { LatestInfoHandler } from './handler_latest_info';
+import { Releases } from './releases';
+import { Router } from './router';
 
 const assetManifest = JSON.parse(manifestJSON);
 
@@ -26,9 +25,9 @@ router.onAll = async (request, env) => await allHandler.handle(request, env);
 router.onLatestInfo = async (request, env, type) => await latestInfoHandler.handle(request, env, type);
 
 export const handler = {
-    async fetch(request: Request, env: Environment, ctx: ExecutionContext): Promise<Response> {
-        return await router.handle(request, env, ctx);
-    },
+   async fetch(request: Request, env: Environment, ctx: ExecutionContext): Promise<Response> {
+      return await router.handle(request, env, ctx);
+   },
 };
 
 export default handler as ExportedHandler<Environment>;

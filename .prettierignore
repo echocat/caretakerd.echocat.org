@@ -1,8 +1,0 @@
-dist/
-coverage/
-node_modules/
-tsconfig.json
-.wrangler
-.idea
-public
-package-lock.json
